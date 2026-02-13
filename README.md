@@ -1,0 +1,93 @@
+# SRAG Analytics Agent (PoC)
+
+Sistema inteligente para monitoramento e análise de Síndrome Respiratória Aguda Grave (SRAG) utilizando dados do DATASUS e Inteligência Artificial.
+
+---
+
+## 🚀 Funcionalidades
+
+- **Processamento de Dados**: Pipeline automatizado que transforma CSV bruto do DATASUS em um banco de dados SQLite otimizado.
+- **Métricas Chave**: Cálculo preciso de:
+  - Taxa de Crescimento de Casos (Mensal)
+  - Taxa de Mortalidade
+  - Taxa de Ocupação de UTI
+  - Status de Vacinação
+- **Inteligência Artificial**: Agente autônomo baseado em **Llama 3 (via Groq)** que gera insights e correlações em linguagem natural.
+- **Relatórios**: Geração automática de DOIS relatórios distintos (Dataset e Notícias) em formatos **HTML e PDF**.
+- **Busca de Notícias**: Monitoramento ativo de portais oficiais (Gov.br, Saúde SP) e imprensa (DuckDuckGo) para contexto atualizado.
+
+## 🛠️ Arquitetura
+
+O projeto segue uma arquitetura modular focada em Clean Code e escalabilidade:
+
+```text
+srag-poc/
+├── agent/               # Núcleo do Agente Inteligente
+│   ├── tools/           # Ferramentas (Banco de Dados, Busca Web)
+│   ├── agent.py         # Orquestrador LangChain
+│   ├── loader.py        # Pipeline de Dados (ETL)
+│   ├── metrics.py       # Motor de Cálculo (Regras de Negócio)
+│   └── chart.py         # Visualização de Dados
+├── data/                # Armazenamento de Dados
+│   ├── raw/             # CSVs Originais
+│   ├── processed/       # CSVs Limpos
+│   └── database/        # Banco SQLite (srag.db)
+├── outputs/             # Relatórios Gerados
+├── run_agent.py         # Ponto de Entrada (Entrypoint)
+└── requirements.txt     # Dependências
+```
+
+## 📋 Pré-requisitos
+
+- Python 3.10 ou superior
+- Uma chave de API da [Groq](https://console.groq.com/) (Gratuita para teste)
+- Dados do DATASUS (Arquivo INFLUD*.csv na pasta `data/raw`)
+
+## ⚡ Como Executar
+
+1. **Clone e Instale as Dependências**:
+   ```bash
+   git clone <repo-url>
+   cd srag-poc
+   pip install -r requirements.txt
+   ```
+
+2. **Configure o Ambiente**:
+   Copie o arquivo de exemplo e adicione sua chave API:
+   ```bash
+   cp .env.example .env
+   # Edite o arquivo .env e adicione: GROQ_API_KEY=sua_chave_aqui
+   ```
+
+3. **Execute o Agente**:
+   ```bash
+   python run_agent.py
+   ```
+
+4. **Resultado**:
+   O sistema irá processar os dados e gerar relatórios na pasta `outputs/relatorios/`:
+   - `relatorio_dataset_YYYYMMDD_HHMMSS.pdf` (Análise de Dados)
+   - `relatorio_news_YYYYMMDD_HHMMSS.pdf` (Contexto de Notícias)
+
+5. **Interface Gráfica (Dashboard)**:
+   Para visualizar os dados em um painel interativo:
+   ```bash
+   streamlit run app.py
+   ```
+
+## 🧠 Decisões Técnicas
+
+- **SQLite**: Escolhido para armazenamento local eficiente e suporte a SQL completo sem overhead de servidor.
+- **LangChain + Groq**: Combinação para alta performance de inferência (Llama 3 70B) com abstração robusta de ferramentas.
+- **Pandas**: Motor de processamento em memória para limpeza e transformação inicial dos dados brutos.
+- **xhtml2pdf**: Geração de relatórios PDF a partir de templates HTML/CSS.
+- **DuckDuckGo & Scraping**: Coleta de notícias em tempo real sem custos de API proprietária.
+
+## ⚠️ Limitações Conhecidas (PoC)
+
+- O desempenho da geração de PDF pode variar com base na complexidade do HTML.
+- O filtro temporal do dataset considera a data mais recente no histórico (2020-2021) para simular um cenário "em tempo real".
+
+## 📄 Licença
+
+Este projeto é uma Prova de Conceito (PoC) desenvolvida para fins de demonstração técnica.

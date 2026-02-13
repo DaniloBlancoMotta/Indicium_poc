@@ -1,0 +1,103 @@
+
+/* Clean, Medical-Grade Dashboard CSS */
+
+/* Global Font */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #333333;
+}
+
+/* Background */
+.stApp {
+    background-color: #f8f9fa;
+}
+
+/* Cards */
+div[data-testid="metric-container"] {
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+div[data-testid="metric-container"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Headers */
+h1 {
+    color: #1a4d80; /* Medical Blue */
+    font-weight: 700;
+}
+
+h2, h3 {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* Charts */
+.js-plotly-plot {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* News Feed */
+.news-card {
+    background: white;
+    border-left: 4px solid #1f77b4;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.news-card h4 {
+    margin: 0 0 5px 0;
+    color: #2c3e50;
+    font-size: 1.1em;
+}
+
+.news-meta {
+    color: #6c757d;
+    font-size: 0.85em;
+    margin-bottom: 10px;
+}
+
+.news-summary {
+    color: #495057;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #ffffff;
+    border-right: 1px solid #e9ecef;
+}
+
+/* Buttons */
+.stButton > button {
+    background-color: #1f77b4;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.stButton > button:hover {
+    background-color: #155a8a;
+    color: white;
+}
+
+/* Metrics Delta Colors */
+[data-testid="stMetricDelta"] svg {
+    display: inline;
+}

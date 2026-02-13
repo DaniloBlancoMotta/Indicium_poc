@@ -1,0 +1,603 @@
+2026-02-11 12:54:18,401 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-11 12:54:18,402 - __main__ - INFO - 🔄 Banco de dados não detectado. Iniciando pipeline de preparação...
+2026-02-11 12:54:18,402 - agent.loader - INFO - 📂 Lendo CSV bruto: INFLUD20-26-06-2025.csv (R100)
+2026-02-11 12:54:21,000 - agent.loader - INFO - ⚠️ Limitado a 5 chunks para teste
+2026-02-11 12:54:21,016 - agent.loader - INFO - raw_rows: 250000
+2026-02-11 12:54:21,024 - agent.loader - INFO - ⚡ Transformando dados (R101-R104)...
+2026-02-11 12:54:46,629 - agent.loader - INFO - Dropados 250000 registros sem data de notificação (R200)
+2026-02-11 12:54:46,630 - agent.loader - INFO - Registros após filtro de 13 meses: 0 (R201)
+2026-02-11 12:54:46,639 - __main__ - ERROR - ❌ Erro crítico na execução: 'CO_MUN_NOT'
+Traceback (most recent call last):
+  File "C:\Python314\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'CO_MUN_NOT'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\run_agent.py", line 30, in main
+    df_clean = loader.clean_data(df_raw)
+  File "c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\agent\loader.py", line 301, in clean_data
+    return transform_data(df)
+  File "c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\agent\loader.py", line 225, in transform_data
+    df['municipio_cod'] = df['CO_MUN_NOT'] # Assuming this column exists in selection
+                          ~~^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\site-packages\pandas\core\frame.py", line 4113, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Python314\Lib\site-packages\pandas\core\indexes\base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'CO_MUN_NOT'
+2026-02-11 13:12:15,857 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-11 13:12:15,861 - __main__ - INFO - 🔄 Banco de dados não detectado. Iniciando pipeline de preparação...
+2026-02-11 13:12:15,861 - agent.loader - INFO - 📂 Lendo CSV bruto: INFLUD20-26-06-2025.csv (R100)
+2026-02-11 13:12:19,531 - agent.loader - INFO - ⚠️ Limitado a 5 chunks para teste
+2026-02-11 13:12:19,560 - agent.loader - INFO - raw_rows: 250000
+2026-02-11 13:12:19,573 - agent.loader - INFO - ⚡ Transformando dados (R101-R104)...
+2026-02-11 13:15:17,848 - agent.loader - INFO - Dropados 0 registros sem data de notificação (R200)
+2026-02-11 13:15:18,107 - agent.loader - INFO - Registros após filtro de 13 meses (ref: 2021-04-05): 245556 (R201)
+2026-02-11 13:15:31,313 - agent.loader - INFO - 🗄️ Ingerindo no SQLite (Schema Target)...
+2026-02-11 13:15:36,422 - agent.loader - INFO - ✅ Ingestão completa: 245556 registros na tabela srag_cases
+2026-02-11 13:15:36,551 - __main__ - ERROR - ❌ Erro crítico na execução: 1 validation error for ChatAnthropic
+anthropic_api_key
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.12/v/string_type
+Traceback (most recent call last):
+  File "c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\run_agent.py", line 36, in main
+    srag_agent = agent.SRAGAgent()
+  File "c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\agent\agent.py", line 26, in __init__
+    self.llm = ChatAnthropic(
+               ~~~~~~~~~~~~~^
+        model="claude-3-5-sonnet-20240620",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        temperature=0,
+        ^^^^^^^^^^^^^^
+        anthropic_api_key=os.getenv("ANTHROPIC_API_KEY")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Python314\Lib\site-packages\langchain_core\load\serializable.py", line 118, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\site-packages\pydantic\main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatAnthropic
+anthropic_api_key
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.12/v/string_type
+2026-02-11 13:17:59,356 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-11 13:17:59,357 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-11 13:17:59,357 - agent.agent - WARNING - Agent: ANTHROPIC_API_KEY não configurada. Insights serão simulados.
+2026-02-11 13:17:59,358 - agent.agent - INFO - 🤖 Agente iniciando análise...
+2026-02-11 13:17:59,358 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-11 13:18:00,426 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:18:00,427 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-11 13:18:00,427 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:18:00,606 - agent.metrics - INFO - ✓ Crescimento (30d): +0.00%
+2026-02-11 13:18:00,606 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-11 13:18:00,606 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-11 13:18:00,607 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-11 13:18:00,607 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:18:00,640 - agent.tools.news_tool - ERROR - Erro ao buscar notícias: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-11 13:18:00,642 - agent.report_generator - INFO - ✅ Relatório final gerado em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260211_131800.html
+2026-02-11 13:18:00,642 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-11 13:18:00,643 - __main__ - INFO - 📄 Relatório disponível em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260211_131800.html
+2026-02-11 13:30:46,802 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-11 13:30:46,805 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-11 13:30:46,806 - agent.agent - WARNING - Agent: GROQ_API_KEY não configurada. Insights serão simulados.
+2026-02-11 13:30:46,806 - agent.agent - INFO - Agente iniciando análise...
+2026-02-11 13:30:46,806 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-11 13:30:47,809 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:30:47,810 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-11 13:30:47,810 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:30:48,023 - agent.metrics - INFO - ✓ Crescimento (30d): +0.00%
+2026-02-11 13:30:48,024 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-11 13:30:48,024 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-11 13:30:48,024 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-11 13:30:48,024 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:30:48,048 - agent.tools.news_tool - WARNING - NewsTool: NEWS_API_KEY não encontrada. Retornando notícias simuladas.
+2026-02-11 13:30:48,050 - agent.report_generator - INFO - ✅ Relatório final gerado em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260211_133048.html
+2026-02-11 13:30:48,050 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-11 13:30:48,050 - __main__ - INFO - 📄 Relatório disponível em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260211_133048.html
+2026-02-11 13:39:18,778 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-11 13:39:18,779 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-11 13:39:19,667 - agent.agent - INFO - Agente iniciando análise...
+2026-02-11 13:39:19,667 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-11 13:39:20,876 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:39:20,876 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-11 13:39:20,877 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:39:21,101 - agent.metrics - INFO - ✓ Crescimento (30d): +0.00%
+2026-02-11 13:39:21,101 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-11 13:39:21,101 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-11 13:39:21,102 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-11 13:39:21,102 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:39:21,149 - agent.tools.news_tool - WARNING - NewsTool: NEWS_API_KEY não encontrada. Retornando notícias simuladas.
+2026-02-11 13:39:21,151 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-11 13:39:23,689 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-11 13:39:23,724 - agent.report_generator - INFO - ✅ Relatório final gerado em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260211_133923.html
+2026-02-11 13:39:23,725 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-11 13:39:23,725 - __main__ - INFO - 📄 Relatório disponível em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260211_133923.html
+2026-02-11 13:42:17,937 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-11 13:42:17,938 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-11 13:42:18,776 - agent.agent - INFO - Agente iniciando análise...
+2026-02-11 13:42:18,777 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-11 13:42:19,774 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:42:19,774 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-11 13:42:19,775 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:42:19,962 - agent.metrics - INFO - ✓ Crescimento (30d): +0.00%
+2026-02-11 13:42:19,963 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-11 13:42:19,963 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-11 13:42:19,963 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-11 13:42:19,963 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:42:19,994 - agent.tools.news_tool - WARNING - NewsTool: NEWS_API_KEY não encontrada. Retornando notícias simuladas.
+2026-02-11 13:42:19,997 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-11 13:42:22,983 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-11 13:42:23,004 - agent.report_generator - INFO - ✅ Relatório final gerado em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260211_134223.html
+2026-02-11 13:42:23,005 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-11 13:42:23,005 - __main__ - INFO - 📄 Relatório disponível em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260211_134223.html
+2026-02-11 13:45:56,457 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-11 13:45:56,458 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-11 13:45:57,527 - agent.agent - INFO - Agente iniciando análise...
+2026-02-11 13:45:57,527 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-11 13:45:58,584 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:45:58,584 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-11 13:45:58,585 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:45:58,776 - agent.metrics - INFO - ✓ Crescimento (30d): +0.00%
+2026-02-11 13:45:58,776 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-11 13:45:58,777 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-11 13:45:58,777 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-11 13:45:58,777 - agent.metrics - INFO - ================================================================================
+2026-02-11 13:45:58,804 - agent.tools.news_tool - WARNING - NewsTool: NEWS_API_KEY não encontrada. Retornando notícias simuladas.
+2026-02-11 13:45:58,807 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-11 13:46:01,476 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-11 13:46:01,496 - agent.report_generator - INFO - ✅ Relatório final gerado em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260211_134601.html
+2026-02-11 13:46:01,497 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-11 13:46:01,497 - __main__ - INFO - 📄 Relatório disponível em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260211_134601.html
+2026-02-11 18:32:27,869 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-11 18:32:27,871 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-11 18:32:30,042 - agent.tools.web_search_tool - INFO - WebSearchTool (DuckDuckGo) inicializada com sucesso.
+2026-02-11 18:32:30,043 - agent.agent - INFO - Agente iniciando análise...
+2026-02-11 18:32:30,043 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-11 18:32:32,877 - agent.metrics - INFO - ================================================================================
+2026-02-11 18:32:32,877 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-11 18:32:32,877 - agent.metrics - INFO - ================================================================================
+2026-02-11 18:32:33,165 - agent.metrics - INFO - ✓ Crescimento (30d): +0.00%
+2026-02-11 18:32:33,165 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-11 18:32:33,165 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-11 18:32:33,166 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-11 18:32:33,166 - agent.metrics - INFO - ================================================================================
+2026-02-11 18:32:33,214 - agent.tools.web_search_tool - INFO - 🔎 Buscando notícias na web: 'aumento casos srag brasil última semana'
+2026-02-11 18:32:33,840 - primp - INFO - response: https://duckduckgo.com/?q=aumento+casos+srag+brasil+%C3%BAltima+semana 200
+2026-02-11 18:32:34,283 - primp - INFO - response: https://duckduckgo.com/news.js?l=br-pt&o=json&noamp=1&q=aumento+casos+srag+brasil+%C3%BAltima+semana&vqd=4-171258919353693783413579890561352879806&p=-1&df=m 200
+2026-02-11 18:32:34,724 - primp - INFO - response: https://news.search.yahoo.com/search?p=aumento+casos+srag+brasil+%C3%BAltima+semana&btf=m 200
+2026-02-11 18:32:34,921 - agent.tools.web_search_tool - INFO - 🔎 Buscando notícias na web: 'vacinação gripe influenza campanha brasil 2024 2025'
+2026-02-11 18:32:35,030 - primp - INFO - response: https://duckduckgo.com/?q=vacina%C3%A7%C3%A3o+gripe+influenza+campanha+brasil+2024+2025 200
+2026-02-11 18:32:35,403 - primp - INFO - response: https://duckduckgo.com/news.js?l=br-pt&o=json&noamp=1&q=vacina%C3%A7%C3%A3o+gripe+influenza+campanha+brasil+2024+2025&vqd=4-146179565181512092441782354281678427710&p=-1&df=m 200
+2026-02-11 18:32:35,478 - primp - INFO - response: https://www.bing.com/news/infinitescrollajax?q=vacina%C3%A7%C3%A3o+gripe+influenza+campanha+brasil+2024+2025&InfiniteScroll=1&first=11&SFX=1&cc=br&setlang=pt&qft=interval%3D%229%22 200
+2026-02-11 18:32:35,489 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-11 18:32:38,170 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-11 18:32:38,228 - __main__ - ERROR - ❌ Erro crítico na execução: 'title'
+Traceback (most recent call last):
+  File "c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\run_agent.py", line 41, in main
+    report_path = reporter.generate_html(
+        data=analysis_result,
+        agent_insights=analysis_result['insights']
+    )
+  File "c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\agent\report_generator.py", line 99, in generate_html
+    {''.join([f'<div class="news-item"><div class="news-title">{n["title"]}</div><div class="news-meta">{n["source"]} - {n["published_at"]}</div><div>{n["summary"]}</div></div>' for n in news[:5]])}
+                                                                ~^^^^^^^^^
+KeyError: 'title'
+2026-02-11 18:51:44,545 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-11 18:51:44,546 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-11 18:51:45,441 - agent.tools.web_search_tool - INFO - WebSearchTool (DuckDuckGo) inicializada com sucesso.
+2026-02-11 18:51:45,441 - agent.agent - INFO - Agente iniciando análise...
+2026-02-11 18:51:45,442 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-11 18:51:46,651 - agent.metrics - INFO - ================================================================================
+2026-02-11 18:51:46,652 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-11 18:51:46,652 - agent.metrics - INFO - ================================================================================
+2026-02-11 18:51:46,889 - agent.metrics - INFO - ✓ Crescimento (30d): +0.00%
+2026-02-11 18:51:46,889 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-11 18:51:46,890 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-11 18:51:46,890 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-11 18:51:46,890 - agent.metrics - INFO - ================================================================================
+2026-02-11 18:51:46,918 - agent.tools.web_search_tool - INFO - 🔎 Buscando notícias na web: 'aumento casos srag brasil última semana'
+2026-02-11 18:51:47,310 - primp - INFO - response: https://duckduckgo.com/?q=aumento+casos+srag+brasil+%C3%BAltima+semana 200
+2026-02-11 18:51:47,517 - primp - INFO - response: https://www.bing.com/news/infinitescrollajax?q=aumento+casos+srag+brasil+%C3%BAltima+semana&InfiniteScroll=1&first=11&SFX=1&cc=br&setlang=pt&qft=interval%3D%229%22 200
+2026-02-11 18:51:47,592 - primp - INFO - response: https://duckduckgo.com/news.js?l=br-pt&o=json&noamp=1&q=aumento+casos+srag+brasil+%C3%BAltima+semana&vqd=4-171258919353693783413579890561352879806&p=-1&df=m 200
+2026-02-11 18:51:47,596 - agent.tools.web_search_tool - INFO - 🔎 Buscando notícias na web: 'vacinação gripe influenza campanha brasil 2024 2025'
+2026-02-11 18:51:47,896 - primp - INFO - response: https://www.bing.com/news/infinitescrollajax?q=vacina%C3%A7%C3%A3o+gripe+influenza+campanha+brasil+2024+2025&InfiniteScroll=1&first=11&SFX=1&cc=br&setlang=pt&qft=interval%3D%229%22 200
+2026-02-11 18:51:48,417 - primp - INFO - response: https://news.search.yahoo.com/search?p=vacina%C3%A7%C3%A3o+gripe+influenza+campanha+brasil+2024+2025&btf=m 200
+2026-02-11 18:51:48,648 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-11 18:51:51,033 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-11 18:51:51,064 - agent.report_generator - INFO - ✅ Relatório final gerado em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260211_185151.html
+2026-02-11 18:51:51,065 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-11 18:51:51,065 - __main__ - INFO - 📄 Relatório disponível em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260211_185151.html
+2026-02-11 19:57:41,128 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-11 19:57:41,129 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-11 19:57:42,370 - agent.agent - INFO - Agente iniciando análise...
+2026-02-11 19:57:42,370 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-11 19:57:43,629 - agent.metrics - INFO - ================================================================================
+2026-02-11 19:57:43,629 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-11 19:57:43,630 - agent.metrics - INFO - ================================================================================
+2026-02-11 19:57:43,805 - agent.metrics - INFO - ✓ Crescimento (30d): +0.00%
+2026-02-11 19:57:43,805 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-11 19:57:43,805 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-11 19:57:43,806 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-11 19:57:43,806 - agent.metrics - INFO - ================================================================================
+2026-02-11 19:57:43,836 - agent.tools.web_search_tool - INFO - 🌐 Scraping Gov.br para 'SRAG'...
+2026-02-11 19:57:43,841 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-11 19:57:43,841 - agent.tools.web_search_tool - INFO - 🌐 Scraping Saúde SP...
+2026-02-11 19:57:43,843 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-11 19:57:44,144 - primp - INFO - response: https://duckduckgo.com/?q=aumento+casos+srag+brasil+influenza+surto 200
+2026-02-11 19:57:44,474 - primp - INFO - response: https://duckduckgo.com/news.js?l=br-pt&o=json&noamp=1&q=aumento+casos+srag+brasil+influenza+surto&vqd=4-339247408096461616800372313433601932743&p=-1&df=m 200
+2026-02-11 19:57:44,816 - primp - INFO - response: https://news.search.yahoo.com/search?p=aumento+casos+srag+brasil+influenza+surto&btf=m 200
+2026-02-11 19:57:44,942 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-11 19:57:47,514 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-11 19:57:47,550 - agent.report_generator - INFO - ✅ Relatório final gerado em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260211_195747.html
+2026-02-11 19:57:47,550 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-11 19:57:47,550 - __main__ - INFO - 📄 Relatório disponível em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260211_195747.html
+2026-02-12 12:23:51,499 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-12 12:23:51,504 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-12 12:24:44,213 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-12 12:24:44,214 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-12 12:24:45,399 - agent.agent - INFO - Agente iniciando análise...
+2026-02-12 12:24:45,400 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-12 12:24:46,435 - agent.metrics - INFO - ================================================================================
+2026-02-12 12:24:46,436 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-12 12:24:46,436 - agent.metrics - INFO - ================================================================================
+2026-02-12 12:24:46,589 - agent.metrics - INFO - ✓ Crescimento (30d): +0.00%
+2026-02-12 12:24:46,590 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-12 12:24:46,590 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-12 12:24:46,591 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-12 12:24:46,591 - agent.metrics - INFO - ================================================================================
+2026-02-12 12:24:46,613 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-12 12:24:48,741 - agent.charts - INFO - 💾 Gráfico diário salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-12 12:24:48,986 - agent.charts - INFO - 💾 Gráfico mensal salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-12 12:24:49,014 - agent.tools.web_search_tool - INFO - 🌐 Scraping Gov.br para 'SRAG'...
+2026-02-12 12:24:49,017 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-12 12:24:49,017 - agent.tools.web_search_tool - INFO - 🌐 Scraping Saúde SP...
+2026-02-12 12:24:49,018 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-12 12:24:49,298 - primp - INFO - response: https://duckduckgo.com/?q=aumento+casos+srag+brasil+influenza+surto 200
+2026-02-12 12:24:49,599 - primp - INFO - response: https://duckduckgo.com/news.js?l=br-pt&o=json&noamp=1&q=aumento+casos+srag+brasil+influenza+surto&vqd=4-339252943926633951273343378656203107543&p=-1&df=m 200
+2026-02-12 12:24:50,917 - primp - INFO - response: https://news.search.yahoo.com/search?p=aumento+casos+srag+brasil+influenza+surto&btf=m 200
+2026-02-12 12:24:51,079 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-12 12:24:53,603 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-12 12:24:53,621 - agent.report_generator - INFO - ✅ Relatório final gerado em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260212_122453.html
+2026-02-12 12:24:53,621 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-12 12:24:53,622 - __main__ - INFO - 📄 Relatório disponível em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260212_122453.html
+2026-02-12 12:26:09,315 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-12 12:26:09,316 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-12 12:26:10,200 - agent.agent - INFO - Agente iniciando análise...
+2026-02-12 12:26:10,200 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-12 12:26:11,485 - agent.metrics - INFO - ================================================================================
+2026-02-12 12:26:11,485 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-12 12:26:11,485 - agent.metrics - INFO - ================================================================================
+2026-02-12 12:26:11,673 - agent.metrics - INFO - ✓ Crescimento (30d): +0.00%
+2026-02-12 12:26:11,674 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-12 12:26:11,674 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-12 12:26:11,674 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-12 12:26:11,674 - agent.metrics - INFO - ================================================================================
+2026-02-12 12:26:11,700 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-12 12:26:13,236 - agent.charts - INFO - 💾 Gráfico diário salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-12 12:26:13,495 - agent.charts - INFO - 💾 Gráfico mensal salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-12 12:26:13,522 - agent.tools.web_search_tool - INFO - 🌐 Scraping Gov.br para 'SRAG'...
+2026-02-12 12:26:13,526 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-12 12:26:13,526 - agent.tools.web_search_tool - INFO - 🌐 Scraping Saúde SP...
+2026-02-12 12:26:13,527 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-12 12:26:14,116 - primp - INFO - response: https://www.bing.com/news/infinitescrollajax?q=aumento+casos+srag+brasil+influenza+surto&InfiniteScroll=1&first=11&SFX=1&cc=br&setlang=pt&qft=interval%3D%229%22 200
+2026-02-12 12:26:14,680 - primp - INFO - response: https://news.search.yahoo.com/search?p=aumento+casos+srag+brasil+influenza+surto&btf=m 200
+2026-02-12 12:26:14,770 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-12 12:26:17,423 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-12 12:26:17,443 - agent.report_generator - INFO - ✅ Relatório final gerado em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260212_122617.html
+2026-02-12 12:26:17,443 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-12 12:26:17,444 - __main__ - INFO - 📄 Relatório disponível em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260212_122617.html
+2026-02-12 12:27:21,177 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-12 12:27:21,178 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-12 12:27:21,988 - agent.agent - INFO - Agente iniciando análise...
+2026-02-12 12:27:21,988 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-12 12:27:23,070 - agent.metrics - INFO - ================================================================================
+2026-02-12 12:27:23,071 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-12 12:27:23,071 - agent.metrics - INFO - ================================================================================
+2026-02-12 12:27:23,226 - agent.metrics - INFO - ✓ Crescimento (30d): +0.00%
+2026-02-12 12:27:23,227 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-12 12:27:23,227 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-12 12:27:23,227 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-12 12:27:23,227 - agent.metrics - INFO - ================================================================================
+2026-02-12 12:27:23,248 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-12 12:27:24,620 - agent.charts - INFO - 💾 Gráfico diário salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-12 12:27:24,862 - agent.charts - INFO - 💾 Gráfico mensal salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-12 12:27:24,888 - agent.tools.web_search_tool - INFO - 🌐 Scraping Gov.br para 'SRAG'...
+2026-02-12 12:27:24,892 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-12 12:27:24,893 - agent.tools.web_search_tool - INFO - 🌐 Scraping Saúde SP...
+2026-02-12 12:27:24,894 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-12 12:27:25,130 - primp - INFO - response: https://duckduckgo.com/?q=aumento+casos+srag+brasil+influenza+surto 200
+2026-02-12 12:27:25,374 - primp - INFO - response: https://duckduckgo.com/news.js?l=br-pt&o=json&noamp=1&q=aumento+casos+srag+brasil+influenza+surto&vqd=4-339252943926633951273343378656203107543&p=-1&df=m 200
+2026-02-12 12:27:25,775 - primp - INFO - response: https://news.search.yahoo.com/search?p=aumento+casos+srag+brasil+influenza+surto&btf=m 200
+2026-02-12 12:27:25,929 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-12 12:27:28,533 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-12 12:27:28,551 - agent.report_generator - INFO - ✅ Relatório final gerado em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260212_122728.html
+2026-02-12 12:27:28,551 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-12 12:27:28,552 - __main__ - INFO - 📄 Relatório disponível em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260212_122728.html
+2026-02-12 14:13:29,850 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-12 14:13:29,852 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-12 14:13:31,074 - agent.agent - INFO - Agente iniciando análise...
+2026-02-12 14:13:31,075 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-12 14:13:32,278 - agent.metrics - INFO - ================================================================================
+2026-02-12 14:13:32,278 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-12 14:13:32,279 - agent.metrics - INFO - ================================================================================
+2026-02-12 14:13:32,363 - agent.metrics - INFO - Data de referência para métricas (P99.5): 2020-06-10
+2026-02-12 14:13:32,509 - agent.metrics - INFO - ✓ Crescimento (30d): +11.24%
+2026-02-12 14:13:32,509 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-12 14:13:32,510 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-12 14:13:32,510 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-12 14:13:32,510 - agent.metrics - INFO - ================================================================================
+2026-02-12 14:13:32,537 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-12 14:13:34,562 - agent.charts - INFO - 💾 Gráfico diário salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-12 14:13:35,293 - agent.charts - INFO - 💾 Gráfico mensal salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-12 14:13:35,354 - agent.tools.web_search_tool - INFO - 🌐 Scraping Gov.br para 'SRAG'...
+2026-02-12 14:13:35,363 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-12 14:13:35,364 - agent.tools.web_search_tool - INFO - 🌐 Scraping Saúde SP...
+2026-02-12 14:13:35,367 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-12 14:13:35,760 - primp - INFO - response: https://duckduckgo.com/?q=aumento+casos+srag+brasil+influenza+surto 200
+2026-02-12 14:13:36,071 - primp - INFO - response: https://duckduckgo.com/news.js?l=br-pt&o=json&noamp=1&q=aumento+casos+srag+brasil+influenza+surto&vqd=4-339255922905541932221874113518786052407&p=-1&df=m 200
+2026-02-12 14:13:36,486 - primp - INFO - response: https://news.search.yahoo.com/search?p=aumento+casos+srag+brasil+influenza+surto&btf=m 200
+2026-02-12 14:13:36,800 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-12 14:13:39,511 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-12 14:13:39,671 - agent.report_generator - INFO - ✅ Relatório final gerado em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260212_141339.html
+2026-02-12 14:13:39,677 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-12 14:13:39,683 - __main__ - INFO - 📄 Relatório disponível em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260212_141339.html
+2026-02-13 00:35:03,621 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-13 00:35:03,623 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-13 00:35:04,948 - agent.agent - INFO - Agente iniciando análise...
+2026-02-13 00:35:04,949 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-13 00:35:06,198 - agent.metrics - INFO - ================================================================================
+2026-02-13 00:35:06,199 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-13 00:35:06,199 - agent.metrics - INFO - ================================================================================
+2026-02-13 00:35:06,290 - agent.metrics - INFO - Data de referência para métricas (P99.5): 2020-06-10
+2026-02-13 00:35:06,439 - agent.metrics - INFO - ✓ Crescimento (30d): +11.24%
+2026-02-13 00:35:06,440 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-13 00:35:06,440 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-13 00:35:06,441 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-13 00:35:06,441 - agent.metrics - INFO - ================================================================================
+2026-02-13 00:35:06,466 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-13 00:35:09,955 - agent.charts - INFO - 💾 Gráfico diário salvo em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-13 00:35:10,318 - agent.charts - INFO - 💾 Gráfico mensal salvo em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-13 00:35:10,347 - agent.tools.web_search_tool - INFO - 🌐 Scraping Gov.br para 'SRAG'...
+2026-02-13 00:35:10,352 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 00:35:10,352 - agent.tools.web_search_tool - INFO - 🌐 Scraping Saúde SP...
+2026-02-13 00:35:10,353 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 00:35:11,026 - primp - INFO - response: https://www.bing.com/news/infinitescrollajax?q=aumento+casos+srag+brasil+influenza+surto&InfiniteScroll=1&first=11&SFX=1&cc=br&setlang=pt&qft=interval%3D%229%22 200
+2026-02-13 00:35:11,544 - primp - INFO - response: https://news.search.yahoo.com/search?p=aumento+casos+srag+brasil+influenza+surto&btf=m 200
+2026-02-13 00:35:11,631 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-13 00:35:14,407 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-13 00:35:14,438 - agent.report_generator - INFO - ✅ Relatório final gerado em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260213_003514.html
+2026-02-13 00:35:14,439 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-13 00:35:14,439 - __main__ - INFO - 📄 Relatório disponível em: c:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260213_003514.html
+2026-02-13 08:19:45,821 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-13 08:19:45,823 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-13 08:19:48,052 - agent.agent - INFO - Agente iniciando análise...
+2026-02-13 08:19:48,053 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-13 08:19:51,127 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:19:51,127 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-13 08:19:51,128 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:19:51,271 - agent.metrics - INFO - Data de referência para métricas (P99.5): 2020-06-10
+2026-02-13 08:19:51,495 - agent.metrics - INFO - ✓ Crescimento (30d): +11.24%
+2026-02-13 08:19:51,496 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-13 08:19:51,496 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-13 08:19:51,496 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-13 08:19:51,497 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:19:51,541 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-13 08:19:55,862 - agent.charts - INFO - 💾 Gráfico diário salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-13 08:19:56,757 - agent.charts - INFO - 💾 Gráfico mensal salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-13 08:19:56,812 - agent.tools.web_search_tool - INFO - 🌐 Scraping Gov.br para 'SRAG'...
+2026-02-13 08:19:56,818 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 08:19:56,818 - agent.tools.web_search_tool - INFO - 🌐 Scraping Saúde SP...
+2026-02-13 08:19:56,821 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 08:19:57,429 - primp - INFO - response: https://pt.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&limit=1&search=aumento%20casos%20srag%20brasil%20influenza%20surto 200
+2026-02-13 08:19:57,758 - primp - INFO - response: https://grokipedia.com/api/typeahead?query=aumento+casos+srag+brasil+influenza+surto&limit=1 200
+2026-02-13 08:19:59,016 - primp - INFO - response: https://www.mojeek.com/search?q=aumento+casos+srag+brasil+influenza+surto 403
+2026-02-13 08:19:59,815 - primp - INFO - response: https://search.yahoo.com/search;_ylt=YZl-5kUdSTax310Em_UzkINW;_ylu=63eOmzHrIZ8wUfONcVcPv1O3yX2nxvAnhOtlGgmhJ6m8Ghc?p=aumento+casos+srag+brasil+influenza+surto&btf=m 200
+2026-02-13 08:20:00,153 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-13 08:20:02,754 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-13 08:20:02,799 - agent.report_generator - INFO - ✅ Relatório final gerado em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260213_082002.html
+2026-02-13 08:20:02,801 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-13 08:20:02,802 - __main__ - INFO - 📄 Relatório disponível em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_srag_20260213_082002.html
+2026-02-13 08:32:53,662 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-13 08:32:53,665 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-13 08:32:54,432 - agent.agent - INFO - Agente iniciando análise...
+2026-02-13 08:32:54,432 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-13 08:32:55,484 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:32:55,485 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-13 08:32:55,485 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:32:55,586 - agent.metrics - INFO - Data de referência para métricas (P99.5): 2020-06-10
+2026-02-13 08:32:55,700 - agent.metrics - INFO - ✓ Crescimento (30d): +11.24%
+2026-02-13 08:32:55,700 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-13 08:32:55,700 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-13 08:32:55,700 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-13 08:32:55,701 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:32:55,723 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-13 08:32:57,079 - agent.charts - INFO - 💾 Gráfico diário salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-13 08:32:57,347 - agent.charts - INFO - 💾 Gráfico mensal salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-13 08:32:57,371 - agent.tools.web_search_tool - INFO - 🌐 Scraping Gov.br para 'SRAG'...
+2026-02-13 08:32:57,374 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 08:32:57,375 - agent.tools.web_search_tool - INFO - 🌐 Scraping Saúde SP...
+2026-02-13 08:32:57,376 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 08:32:57,574 - primp - INFO - response: https://pt.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&limit=1&search=aumento%20casos%20srag%20brasil%20influenza%20surto 200
+2026-02-13 08:32:57,744 - primp - INFO - response: https://grokipedia.com/api/typeahead?query=aumento+casos+srag+brasil+influenza+surto&limit=1 200
+2026-02-13 08:32:57,932 - primp - INFO - response: https://www.google.com/search?q=aumento+casos+srag+brasil+influenza+surto&filter=1&start=0&hl=pt-BR&lr=lang_pt&cr=countryBR&tbs=qdr%3Am 200
+2026-02-13 08:32:58,113 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-13 08:33:00,893 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-13 08:33:00,925 - agent.report_generator - ERROR - Exceção na conversão PDF: 'NotImplementedType' object is not iterable
+2026-02-13 08:33:00,931 - agent.report_generator - ERROR - Exceção na conversão PDF: 'NotImplementedType' object is not iterable
+2026-02-13 08:33:00,932 - agent.report_generator - INFO - ✅ Relatórios gerados: 2 arquivos.
+2026-02-13 08:33:00,932 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-13 08:33:00,932 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_083300.html
+2026-02-13 08:33:00,933 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_083300.html
+2026-02-13 08:35:10,093 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-13 08:35:10,094 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-13 08:35:10,753 - agent.agent - INFO - Agente iniciando análise...
+2026-02-13 08:35:10,753 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-13 08:35:11,732 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:35:11,732 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-13 08:35:11,733 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:35:11,856 - agent.metrics - INFO - Data de referência para métricas (P99.5): 2020-06-10
+2026-02-13 08:35:11,992 - agent.metrics - INFO - ✓ Crescimento (30d): +11.24%
+2026-02-13 08:35:11,992 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-13 08:35:11,993 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-13 08:35:11,993 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-13 08:35:11,993 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:35:12,017 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-13 08:35:13,340 - agent.charts - INFO - 💾 Gráfico diário salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-13 08:35:13,603 - agent.charts - INFO - 💾 Gráfico mensal salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-13 08:35:13,629 - agent.tools.web_search_tool - INFO - 🌐 Scraping Gov.br para 'SRAG'...
+2026-02-13 08:35:13,633 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 08:35:13,633 - agent.tools.web_search_tool - INFO - 🌐 Scraping Saúde SP...
+2026-02-13 08:35:13,634 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 08:35:13,804 - primp - INFO - response: https://pt.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&limit=1&search=aumento%20casos%20srag%20brasil%20influenza%20surto 200
+2026-02-13 08:35:14,350 - primp - INFO - response: https://grokipedia.com/api/typeahead?query=aumento+casos+srag+brasil+influenza+surto&limit=1 200
+2026-02-13 08:35:15,181 - httpx - INFO - HTTP Request: POST https://html.duckduckgo.com/html/ "HTTP/2 200 OK"
+2026-02-13 08:35:15,195 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-13 08:35:18,622 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-13 08:35:18,650 - agent.report_generator - ERROR - Exceção na conversão PDF: 'NotImplementedType' object is not iterable
+2026-02-13 08:35:18,656 - agent.report_generator - ERROR - Exceção na conversão PDF: 'NotImplementedType' object is not iterable
+2026-02-13 08:35:18,656 - agent.report_generator - INFO - ✅ Relatórios gerados: 2 arquivos.
+2026-02-13 08:35:18,656 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-13 08:35:18,657 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_083518.html
+2026-02-13 08:35:18,657 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_083518.html
+2026-02-13 08:39:57,517 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-13 08:39:57,519 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-13 08:39:59,130 - agent.agent - INFO - Agente iniciando análise...
+2026-02-13 08:39:59,131 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-13 08:40:00,320 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:40:00,321 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-13 08:40:00,321 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:40:00,464 - agent.metrics - INFO - Data de referência para métricas (P99.5): 2020-06-10
+2026-02-13 08:40:00,622 - agent.metrics - INFO - ✓ Crescimento (30d): +11.24%
+2026-02-13 08:40:00,622 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-13 08:40:00,622 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-13 08:40:00,622 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-13 08:40:00,623 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:40:00,650 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-13 08:40:02,544 - agent.charts - INFO - 💾 Gráfico diário salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-13 08:40:02,916 - agent.charts - INFO - 💾 Gráfico mensal salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-13 08:40:02,943 - agent.tools.web_search_tool - INFO - 🌐 Scraping Gov.br para 'SRAG'...
+2026-02-13 08:40:02,947 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 08:40:02,947 - agent.tools.web_search_tool - INFO - 🌐 Scraping Saúde SP...
+2026-02-13 08:40:02,948 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 08:40:03,282 - primp - INFO - response: https://pt.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&limit=1&search=aumento%20casos%20srag%20brasil%20influenza%20surto 200
+2026-02-13 08:40:03,871 - primp - INFO - response: https://grokipedia.com/api/typeahead?query=aumento+casos+srag+brasil+influenza+surto&limit=1 200
+2026-02-13 08:40:04,906 - primp - INFO - response: https://www.mojeek.com/search?q=aumento+casos+srag+brasil+influenza+surto 403
+2026-02-13 08:40:05,732 - primp - INFO - response: https://search.brave.com/search?q=aumento+casos+srag+brasil+influenza+surto&source=web&tf=pm 200
+2026-02-13 08:40:05,755 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-13 08:40:08,570 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-13 08:40:08,615 - xhtml2pdf.tags - WARNING - Could not get image data from src attribute: file:///C:/Users/UNIVERSO/OneDrive/Apps/Desktop/Indicium%20Health/srag-poc/outputs/relatorios/assets/cases_daily.png
+'<img src="file:///C:/Users/UNIVERSO/OneDrive/Apps/Desktop/Indicium%20Health/srag-poc/outputs/relatorios/assets/cases_daily.png" class="chart-img"/>'
+2026-02-13 08:40:08,617 - xhtml2pdf.tags - WARNING - Could not get image data from src attribute: file:///C:/Users/UNIVERSO/OneDrive/Apps/Desktop/Indicium%20Health/srag-poc/outputs/relatorios/assets/cases_monthly.png
+'<img src="file:///C:/Users/UNIVERSO/OneDrive/Apps/Desktop/Indicium%20Health/srag-poc/outputs/relatorios/assets/cases_monthly.png" class="chart-img"/>'
+2026-02-13 08:40:08,688 - agent.report_generator - INFO - ✅ Relatórios gerados: 4 arquivos.
+2026-02-13 08:40:08,689 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-13 08:40:08,689 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_084008.html
+2026-02-13 08:40:08,689 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_084008.pdf
+2026-02-13 08:40:08,689 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_084008.html
+2026-02-13 08:40:08,689 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_084008.pdf
+2026-02-13 08:52:54,930 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-13 08:52:54,932 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-13 08:52:57,437 - agent.agent - INFO - Agente iniciando análise...
+2026-02-13 08:52:57,440 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-13 08:53:00,424 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:53:00,424 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-13 08:53:00,425 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:53:00,668 - agent.metrics - INFO - Data de referência para métricas (P99.5): 2020-06-10
+2026-02-13 08:53:00,951 - agent.metrics - INFO - ✓ Crescimento (30d): +11.24%
+2026-02-13 08:53:00,952 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-13 08:53:00,952 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-13 08:53:00,953 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-13 08:53:00,953 - agent.metrics - INFO - ================================================================================
+2026-02-13 08:53:01,002 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-13 08:53:04,891 - agent.charts - INFO - 💾 Gráfico diário salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-13 08:53:05,749 - agent.charts - INFO - 💾 Gráfico mensal salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-13 08:53:05,826 - agent.tools.web_search_tool - INFO - 🌐 Scraping Gov.br para 'SRAG'...
+2026-02-13 08:53:05,834 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 08:53:05,834 - agent.tools.web_search_tool - INFO - 🌐 Scraping Saúde SP...
+2026-02-13 08:53:05,836 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 08:53:06,232 - primp - INFO - response: https://pt.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&limit=1&search=aumento%20casos%20srag%20brasil%20influenza%20surto 200
+2026-02-13 08:53:06,769 - primp - INFO - response: https://grokipedia.com/api/typeahead?query=aumento+casos+srag+brasil+influenza+surto&limit=1 200
+2026-02-13 08:53:07,553 - primp - INFO - response: https://search.yahoo.com/search;_ylt=QDs-c2syIMfIC31oz6nvasnB;_ylu=2tsQlNyudlv_C1iAF-unv08MC0acIKGMGuzp9sBfnPx2_ug?p=aumento+casos+srag+brasil+influenza+surto&btf=m 200
+2026-02-13 08:53:08,021 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-13 08:53:10,781 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-13 08:53:11,095 - xhtml2pdf.util - WARNING - getSize: Not a float '90%'
+2026-02-13 08:53:11,618 - agent.report_generator - INFO - ✅ Relatórios gerados: 4 arquivos.
+2026-02-13 08:53:11,619 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-13 08:53:11,619 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_085310.html
+2026-02-13 08:53:11,620 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_085310.pdf
+2026-02-13 08:53:11,620 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_085310.html
+2026-02-13 08:53:11,620 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_085310.pdf
+2026-02-13 09:05:48,684 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-13 09:05:48,685 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-13 09:05:49,552 - agent.agent - INFO - Agente iniciando análise...
+2026-02-13 09:05:49,553 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-13 09:05:50,563 - agent.metrics - INFO - ================================================================================
+2026-02-13 09:05:50,563 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-13 09:05:50,564 - agent.metrics - INFO - ================================================================================
+2026-02-13 09:05:50,682 - agent.metrics - INFO - Data de referência para métricas (P99.5): 2020-06-10
+2026-02-13 09:05:50,800 - agent.metrics - INFO - ✓ Crescimento (30d): +11.24%
+2026-02-13 09:05:50,800 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-13 09:05:50,801 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-13 09:05:50,801 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-13 09:05:50,801 - agent.metrics - INFO - ================================================================================
+2026-02-13 09:05:50,827 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-13 09:05:52,242 - agent.charts - INFO - 💾 Gráfico diário salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-13 09:05:52,549 - agent.charts - INFO - 💾 Gráfico mensal salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-13 09:05:52,580 - agent.tools.web_search_tool - INFO - 🌐 Scraping Gov.br para 'SRAG'...
+2026-02-13 09:05:52,584 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 09:05:52,585 - agent.tools.web_search_tool - INFO - 🌐 Scraping Saúde SP...
+2026-02-13 09:05:52,585 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 09:05:52,856 - primp - INFO - response: https://pt.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&limit=1&search=aumento%20casos%20srag%20brasil%20influenza%20surto 200
+2026-02-13 09:05:53,376 - primp - INFO - response: https://grokipedia.com/api/typeahead?query=aumento+casos+srag+brasil+influenza+surto&limit=1 200
+2026-02-13 09:05:54,327 - primp - INFO - response: https://www.mojeek.com/search?q=aumento+casos+srag+brasil+influenza+surto 403
+2026-02-13 09:05:55,786 - primp - INFO - response: https://yandex.com/search/site/?text=aumento+casos+srag+brasil+influenza+surto&web=1&searchid=6339050 200
+2026-02-13 09:05:55,871 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-13 09:05:57,563 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-13 09:05:57,662 - xhtml2pdf.util - WARNING - getSize: Not a float '90%'
+2026-02-13 09:05:57,780 - agent.report_generator - INFO - ✅ Relatórios gerados: 4 arquivos.
+2026-02-13 09:05:57,781 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-13 09:05:57,781 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_090557.html
+2026-02-13 09:05:57,781 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_090557.pdf
+2026-02-13 09:05:57,781 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_090557.html
+2026-02-13 09:05:57,782 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_090557.pdf
+2026-02-13 09:12:55,150 - __main__ - INFO - 🚀 Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-13 09:12:55,151 - __main__ - INFO - ✅ Banco de dados existente detectado.
+2026-02-13 09:12:57,147 - agent.agent - INFO - Agente iniciando análise...
+2026-02-13 09:12:57,147 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-13 09:13:00,261 - agent.metrics - INFO - ================================================================================
+2026-02-13 09:13:00,262 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-13 09:13:00,262 - agent.metrics - INFO - ================================================================================
+2026-02-13 09:13:00,470 - agent.metrics - INFO - Data de referência para métricas (P99.5): 2020-06-10
+2026-02-13 09:13:00,697 - agent.metrics - INFO - ✓ Crescimento (30d): +11.24%
+2026-02-13 09:13:00,699 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-13 09:13:00,700 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-13 09:13:00,700 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-13 09:13:00,701 - agent.metrics - INFO - ================================================================================
+2026-02-13 09:13:00,751 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-13 09:13:04,657 - agent.charts - INFO - 💾 Gráfico diário salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-13 09:13:05,574 - agent.charts - INFO - 💾 Gráfico mensal salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-13 09:13:05,632 - agent.tools.web_search_tool - INFO - 🌐 Scraping Gov.br para 'SRAG 2026'...
+2026-02-13 09:13:05,648 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 09:13:05,648 - agent.tools.web_search_tool - INFO - 🌐 Scraping Saúde SP...
+2026-02-13 09:13:05,650 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 09:13:06,249 - primp - INFO - response: https://pt.wikipedia.org/w/api.php?action=opensearch&profile=fuzzy&limit=1&search=aumento%20casos%20srag%20brasil%20influenza%20surto%202026 200
+2026-02-13 09:13:06,579 - primp - INFO - response: https://grokipedia.com/api/typeahead?query=aumento+casos+srag+brasil+influenza+surto+2026&limit=1 200
+2026-02-13 09:13:06,991 - primp - INFO - response: https://www.google.com/search?q=aumento+casos+srag+brasil+influenza+surto+2026&filter=1&start=0&hl=pt-BR&lr=lang_pt&cr=countryBR&tbs=qdr%3Ay 200
+2026-02-13 09:13:07,305 - agent.agent - INFO - 🧠 Gerando insights com Llama 3 (Groq)...
+2026-02-13 09:13:09,171 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-13 09:13:09,604 - xhtml2pdf.util - WARNING - getSize: Not a float '90%'
+2026-02-13 09:13:09,992 - agent.report_generator - INFO - ✅ Relatórios gerados: 4 arquivos.
+2026-02-13 09:13:09,992 - __main__ - INFO - 🏆 Execução concluída com sucesso!
+2026-02-13 09:13:09,993 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_091309.html
+2026-02-13 09:13:09,993 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_091309.pdf
+2026-02-13 09:13:09,994 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_091309.html
+2026-02-13 09:13:09,994 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_091309.pdf
