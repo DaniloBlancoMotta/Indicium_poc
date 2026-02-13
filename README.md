@@ -1,133 +1,149 @@
-# SRAG Analytics Agent (PoC)
+# SRAG Analytics Agent 🏥
 
+![Status](https://img.shields.io/badge/status-active-success.svg)
+![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-Sistema inteligente para monitoramento e análise de Síndrome Respiratória Aguda Grave (SRAG) utilizando dados do DATASUS e Inteligência Artificial.
+## 📌 Descrição do Problema
 
----
+A Síndrome Respiratória Aguda Grave (SRAG) é uma condição crítica de saúde pública que exige monitoramento contínuo para detecção de surtos, avaliação da gravidade e gestão de recursos hospitalares. O volume de dados gerados pelos sistemas de notificação (DATASUS) cria um desafio para extração rápida de insights acionáveis por gestores de saúde. O problema central que este projeto resolve é a necessidade de **agilidade na transformação de dados brutos em inteligência epidemiológica**, permitindo o acompanhamento em tempo real de métricas críticas como mortalidade, ocupação de leitos de UTI e cobertura vacinal.
 
-## 🎯 Descrição do Problema e Contexto
-
-A Síndrome Respiratória Aguda Grave (SRAG) representa um desafio contínuo para a saúde pública, exigindo monitoramento constante e respostas ágeis. Os dados epidemiológicos, embora disponíveis publicamente através do DATASUS (sistema SIVEP-Gripe), apresentam desafios significativos:
-
-1.  **Volume e Complexidade**: Milhares de registros diários com dezenas de variáveis clínicas e demográficas.
-2.  **Necessidade de Agilidade**: A identificação de surtos e tendências precisa ser feita em tempo hábil para orientar políticas públicas.
-3.  **Processamento Manual**: A análise tradicional depende de processos manuais de limpeza e estruturação de dados, propensos a erros e lentidão.
-4.  **Desconexão de Contexto**: Dados isolados sem o contexto de notícias e eventos atuais podem levar a interpretações incompletas.
-
-Este projeto propõe uma **solução automatizada** que ingere dados brutos, calcula métricas epidemiológicas críticas e utiliza um **Agente de IA** para gerar relatórios analíticos contextualizados, integrando dados quantitativos com notícias recentes, permitindo uma tomada de decisão mais informada e rápida.
+A solução desenvolvida atua como um **Agente de Inteligência Epidemiológica**, automatizando a ingestão de dados, o cálculo de indicadores chave de desempenho (KPIs) e a geração de relatórios contextuais enriquecidos por notícias recentes e análises via LLM (Large Language Model).
 
 ---
 
-## 🚀 Funcionalidades
+## 🚀 Solução Desenvolvida
 
-- **Processamento de Dados**: Pipeline automatizado que transforma CSV bruto do DATASUS em um banco de dados SQLite otimizado.
-- **Métricas Chave**: Cálculo preciso de:
-  - Taxa de Crescimento de Casos (Mensal)
-  - Taxa de Mortalidade
-  - Taxa de Ocupação de UTI
-  - Status de Vacinação
-- **Inteligência Artificial**: Agente autônomo baseado em **Llama 3 (via Groq)** que gera insights e correlações em linguagem natural.
-- **Relatórios**: Geração automática de DOIS relatórios distintos (Dataset e Notícias) em formatos **HTML e PDF**.
-- **Busca de Notícias**: Monitoramento ativo de portais oficiais (Gov.br, Saúde SP) e imprensa (DuckDuckGo) para contexto atualizado.
+A solução é composta por uma arquitetura modular que inclui:
 
-## 🛠️ Arquitetura
+1.  **Pipeline de Dados (ETL)**: Processamento e limpeza de dados brutos do DATASUS, transformando arquivos CSV em um banco de dados SQLite otimizado.
+2.  **Cálculo de Métricas Core**: Implementação de lógica de negócio para calcular taxas de crescimento de casos, mortalidade, ocupação de UTI e vacinação.
+3.  **Agente de IA (LangChain)**: Um orquestrador inteligente que combina dados internos com buscas na web (notícias recentes) para gerar relatórios analíticos contextualizados.
+4.  **Interface Interativa (Streamlit)**: Um dashboard web responsivo para visualização de dados, tendências temporais e acesso aos relatórios gerados pela IA.
 
-O projeto segue uma arquitetura modular focada em Clean Code e escalabilidade:
+### Funcionalidades Principais
+-   **Monitoramento em Tempo Real**: Métricas atualizadas com base nos últimos dados disponíveis.
+-   **Análise Preditiva e Contextual**: Insights gerados por IA correlacionando dados internos com notícias externas.
+-   **Visualização de Dados**: Gráficos interativos (Plotly) para análise temporal (diária e mensal) e distribuição geográfica.
+-   **Relatórios Automatizados**: Geração de documentos executivos com resumo do cenário atual.
 
-```text
-srag-poc/
-├── agent/               # Núcleo do Agente Inteligente
-│   ├── tools/           # Ferramentas (Banco de Dados, Busca Web)
-│   ├── agent.py         # Orquestrador LangChain
-│   ├── loader.py        # Pipeline de Dados (ETL)
-│   ├── metrics.py       # Motor de Cálculo (Regras de Negócio)
-│   └── chart.py         # Visualização de Dados
-├── data/                # Armazenamento de Dados
-│   ├── raw/             # CSVs Originais
-│   ├── processed/       # CSVs Limpos
-│   └── database/        # Banco SQLite (srag.db)
-├── outputs/             # Relatórios Gerados
-├── run_agent.py         # Ponto de Entrada (Entrypoint)
-└── requirements.txt     # Dependências
+---
+
+## 📊 Análise Exploratória de Dados (EDA)
+
+A etapa de EDA foi fundamental para garantir a qualidade e confiabilidade das métricas geradas. As análises detalhadas estão disponíveis no diretório `analise/notebooks/`, com destaque para o notebook `01_eda_inicial.ipynb`.
+
+### Principais Análises Realizadas:
+-   **Qualidade dos Dados**: Verificação de completude e consistência das colunas críticas (`DT_NOTIFIC`, `EVOLUCAO`, `UTI`, `VACINA`).
+-   **Tratamento de Valores Ausentes (Nulls)**:
+    -   Campos de evolução (`EVOLUCAO`) e UTI (`UTI`) exigiram tratamento específico para diferenciar "não informado" de "negativo".
+    -   Datas inválidas ou futuras foram filtradas.
+-   **Análise Univariada e Bivariada**:
+    -   Distribuição temporal dos casos (sazonalidade).
+    -   Correlação entre idade, comorbidades e óbito.
+    -   Impacto da vacinação na gravidade dos casos (internação em UTI e óbito).
+-   **Limpeza e Padronização**: Normalização de nomes de colunas e tipos de dados para garantir consistência no banco de dados SQLite.
+
+---
+
+## 🛠️ Instalação e Configuração
+
+### Pré-requisitos
+-   Python 3.10 ou superior
+-   Git
+
+### 1. Clonar o Repositório
+```bash
+git clone https://github.com/seu-usuario/srag-analytics.git
+cd srag-analytics
 ```
 
-## 📋 Pré-requisitos
+### 2. Configurar Ambiente Virtual
+Recomendamos o uso de um ambiente virtual para isolar as dependências do projeto.
 
-- Python 3.10 ou superior
-- Uma chave de API da [Groq](https://console.groq.com/) (Gratuita para teste)
-- Dados do DATASUS (Arquivo INFLUD*.csv na pasta `data/raw`)
+**Windows:**
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
 
-## ⚡ Como Executar
+**Linux/macOS:**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
-1. **Clone e Instale as Dependências**:
-   Recomendamos o uso de um ambiente virtual para isolar as dependências do projeto.
-   ```bash
-   git clone <repo-url>
-   cd srag-poc
-   
-   # Criar ambiente virtual
-   python -m venv .venv
-   
-   # Ativar ambiente virtual
-   # Windows:
-   .venv\Scripts\activate
-   # Linux/Mac:
-   source .venv/bin/activate
+### 3. Instalar Dependências
+O arquivo `requirements.txt` contém todas as bibliotecas necessárias, incluindo `streamlit`, `pandas`, `plotly`, `langchain`, etc.
 
-   pip install -r requirements.txt
-   ```
+```bash
+pip install -r requirements.txt
+```
 
-2. **Configure o Ambiente**:
-   Copie o arquivo de exemplo e adicione sua chave API:
-   ```bash
-   cp .env.example .env
-   # Edite o arquivo .env e adicione: GROQ_API_KEY=sua_chave_aqui
-   ```
+### 4. Configurar Variáveis de Ambiente
+Crie um arquivo `.env` na raiz do projeto baseando-se no exemplo:
 
-3. **Execute o Agente**:
-   ```bash
-   python run_agent.py
-   ```
+```bash
+cp .env.example .env
+```
+Edite o arquivo `.env` inserindo suas chaves de API (ex: OpenAI, Anthropic, Tavily) necessárias para o Agente de IA.
 
-4. **Resultado**:
-   O sistema irá processar os dados e gerar relatórios na pasta `outputs/relatorios/`:
-   - `relatorio_dataset_YYYYMMDD_HHMMSS.pdf` (Análise de Dados)
-   - `relatorio_news_YYYYMMDD_HHMMSS.pdf` (Contexto de Notícias)
+---
 
-5. **Interface Gráfica (Dashboard)**:
-   Para visualizar os dados em um painel interativo:
-   ```bash
-   streamlit run app.py
-   ```
+## 🐳 Conteinerização (Docker)
 
-## 🐳 Docker
+A aplicação está totalmente conteinerizada, facilitando o deploy e garantindo consistência entre ambientes de desenvolvimento e produção.
 
-Para executar a aplicação em um container Docker, siga os passos abaixo:
+### Construir a Imagem Docker
+```bash
+docker build -t srag-analytics .
+```
 
-1. **Construir a Imagem**:
-   ```bash
-   docker build -t srag-agent .
-   ```
+### Executar o Container
+Este comando inicia a aplicação na porta 8501:
 
-2. **Executar o Container**:
-   ```bash
-   docker run -p 8501:8501 --env-file .env srag-agent
-   ```
-   Isso iniciará a aplicação e disponibilizará o dashboard na porta 8501.
+```bash
+docker run -p 8501:8501 srag-analytics
+```
+Acesse o dashboard em: `http://localhost:8501`
 
-## 🧠 Decisões Técnicas
+---
 
-- **SQLite**: Escolhido para armazenamento local eficiente e suporte a SQL completo sem overhead de servidor.
-- **LangChain + Groq**: Combinação para alta performance de inferência (Llama 3 70B) com abstração robusta de ferramentas.
-- **Pandas**: Motor de processamento em memória para limpeza e transformação inicial dos dados brutos.
-- **xhtml2pdf**: Geração de relatórios PDF a partir de templates HTML/CSS.
-- **DuckDuckGo & Scraping**: Coleta de notícias em tempo real sem custos de API proprietária.
+## ▶️ Como Executar Localmente
 
-## ⚠️ Limitações Conhecidas (PoC)
+Para iniciar o dashboard Streamlit fora do container:
 
-- O desempenho da geração de PDF pode variar com base na complexidade do HTML.
-- O filtro temporal do dataset considera a data mais recente no histórico (2020-2021) para simular um cenário "em tempo real".
+```bash
+streamlit run app.py
+```
+
+Para executar apenas o pipeline de dados e geração de relatório via terminal:
+```bash
+python run_agent.py --output outputs/relatorios/
+```
+
+---
+
+## 📂 Estrutura do Projeto
+
+```
+srag-analytics/
+├── .agent/             # Documentação de workflows e regras do agente
+├── agent/              # Código fonte do Agente de IA e Ferramentas
+│   ├── tools/          # Ferramentas (Database, News Search)
+│   ├── metrics.py      # Lógica de cálculo de KPIs
+│   └── report_generator.py # Geração de relatórios
+├── analise/            # Notebooks de EDA e exploração
+├── app.py              # Ponto de entrada do Dashboard Streamlit
+├── components/         # Componentes de UI do Streamlit
+├── data/               # Dados brutos e banco de dados SQLite
+├── Dockerfile          # Configuração do container
+├── requirements.txt    # Dependências do projeto
+└── utils/              # Funções utilitárias
+```
+
+---
 
 ## 📄 Licença
 
-Este projeto é uma Prova de Conceito (PoC) desenvolvida para fins de demonstração técnica.
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.

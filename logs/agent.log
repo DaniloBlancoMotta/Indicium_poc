@@ -601,3 +601,161 @@ KeyError: 'title'
 2026-02-13 09:13:09,993 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_091309.pdf
 2026-02-13 09:13:09,994 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_091309.html
 2026-02-13 09:13:09,994 - __main__ - INFO - 📄 Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_091309.pdf
+2026-02-13 13:00:55,523 - __main__ - INFO - Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-13 13:00:55,525 - __main__ - INFO - Banco de dados existente detectado.
+2026-02-13 13:00:55,526 - agent.agent - INFO - Agente iniciando análise...
+2026-02-13 13:00:55,526 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-13 13:01:00,445 - agent.metrics - INFO - ================================================================================
+2026-02-13 13:01:00,446 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-13 13:01:00,446 - agent.metrics - INFO - ================================================================================
+2026-02-13 13:01:01,079 - agent.metrics - INFO - Data de referência para métricas (P99.5): 2020-06-10
+2026-02-13 13:01:01,713 - agent.metrics - INFO - ✓ Crescimento (30d): +11.24%
+2026-02-13 13:01:01,776 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-13 13:01:01,820 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-13 13:01:01,867 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-13 13:01:01,899 - agent.metrics - INFO - ================================================================================
+2026-02-13 13:01:02,436 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-13 13:01:13,323 - agent.charts - INFO - 💾 Gráfico diário salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-13 13:01:14,693 - agent.charts - INFO - 💾 Gráfico mensal salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-13 13:01:14,757 - agent.tools.web_search_tool - INFO - Scraping Gov.br para 'SRAG 2026'...
+2026-02-13 13:01:14,765 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 13:01:14,766 - agent.tools.web_search_tool - INFO - Scraping Saúde SP...
+2026-02-13 13:01:14,771 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 13:01:14,772 - agent.tools.web_search_tool - INFO - Buscando notícias via Tavily: aumento casos srag brasil influenza surto 2026
+2026-02-13 13:01:14,776 - agent.tools.web_search_tool - ERROR - Erro Tavily: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 13:01:14,805 - agent.tools.web_search_tool - ERROR - Traceback (most recent call last):
+  File "C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\agent\tools\web_search_tool.py", line 167, in fetch_srag_news
+    response = self.tavily_client.search(
+        query=q,
+    ...<4 lines>...
+        topic="news" # Otimizado para notícias
+    )
+  File "C:\Python314\Lib\site-packages\tavily\tavily.py", line 142, in search
+    response_dict = self._search(query,
+                                 search_depth=search_depth,
+    ...<16 lines>...
+                                 **kwargs,
+                                 )
+  File "C:\Python314\Lib\site-packages\tavily\tavily.py", line 91, in _search
+    response = requests.post(self.base_url + "/search", data=json.dumps(data), headers=self.headers, timeout=timeout, proxies=self.proxies)
+  File "C:\Python314\Lib\site-packages\requests\api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "C:\Python314\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Python314\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Python314\Lib\site-packages\requests\adapters.py", line 616, in send
+    self.cert_verify(conn, request.url, verify, cert)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\site-packages\requests\adapters.py", line 303, in cert_verify
+    raise OSError(
+    ...<2 lines>...
+    )
+OSError: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+
+2026-02-13 13:01:14,820 - agent.agent - INFO - Tentando gerar insights com a chave 1/2 (gsk_...niGJ)...
+2026-02-13 13:01:20,889 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-13 13:01:21,432 - xhtml2pdf.util - WARNING - getSize: Not a float '90%'
+2026-02-13 13:01:21,723 - agent.report_generator - INFO - Relatórios gerados: 4 arquivos.
+2026-02-13 13:01:21,726 - __main__ - INFO - Execução concluída com sucesso!
+2026-02-13 13:01:21,727 - __main__ - INFO - Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_130120.html
+2026-02-13 13:01:21,727 - __main__ - INFO - Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_130120.pdf
+2026-02-13 13:01:21,728 - __main__ - INFO - Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_130120.html
+2026-02-13 13:01:21,729 - __main__ - INFO - Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_130120.pdf
+2026-02-13 13:08:47,050 - __main__ - INFO - Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-13 13:08:47,051 - __main__ - INFO - Banco de dados existente detectado.
+2026-02-13 13:08:47,052 - agent.agent - INFO - Agente iniciando análise...
+2026-02-13 13:08:47,052 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-13 13:08:50,111 - agent.metrics - INFO - ================================================================================
+2026-02-13 13:08:50,111 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-13 13:08:50,111 - agent.metrics - INFO - ================================================================================
+2026-02-13 13:08:50,248 - agent.metrics - INFO - Data de referência para métricas (P99.5): 2020-06-10
+2026-02-13 13:08:50,491 - agent.metrics - INFO - ✓ Crescimento (30d): +11.24%
+2026-02-13 13:08:50,491 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-13 13:08:50,491 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-13 13:08:50,492 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-13 13:08:50,492 - agent.metrics - INFO - ================================================================================
+2026-02-13 13:08:50,527 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-13 13:08:53,245 - agent.charts - INFO - 💾 Gráfico diário salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-13 13:08:53,761 - agent.charts - INFO - 💾 Gráfico mensal salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-13 13:08:53,804 - agent.tools.web_search_tool - INFO - Scraping Gov.br para 'SRAG 2026'...
+2026-02-13 13:08:53,813 - agent.tools.web_search_tool - WARNING - Falha ao acessar Gov.br: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 13:08:53,813 - agent.tools.web_search_tool - INFO - Scraping Saúde SP...
+2026-02-13 13:08:53,815 - agent.tools.web_search_tool - WARNING - Falha ao acessar Saúde SP: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 13:08:53,815 - agent.tools.web_search_tool - INFO - Buscando notícias via Tavily: aumento casos srag brasil influenza surto 2026
+2026-02-13 13:08:53,817 - agent.tools.web_search_tool - ERROR - Erro Tavily: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 13:08:53,827 - agent.tools.web_search_tool - ERROR - Traceback (most recent call last):
+  File "C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\agent\tools\web_search_tool.py", line 169, in fetch_srag_news
+    response = self.tavily_client.search(
+        query=q,
+    ...<4 lines>...
+        topic="news" # Otimizado para notícias
+    )
+  File "C:\Python314\Lib\site-packages\tavily\tavily.py", line 142, in search
+    response_dict = self._search(query,
+                                 search_depth=search_depth,
+    ...<16 lines>...
+                                 **kwargs,
+                                 )
+  File "C:\Python314\Lib\site-packages\tavily\tavily.py", line 91, in _search
+    response = requests.post(self.base_url + "/search", data=json.dumps(data), headers=self.headers, timeout=timeout, proxies=self.proxies)
+  File "C:\Python314\Lib\site-packages\requests\api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+  File "C:\Python314\Lib\site-packages\requests\api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "C:\Python314\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "C:\Python314\Lib\site-packages\requests\adapters.py", line 616, in send
+    self.cert_verify(conn, request.url, verify, cert)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\site-packages\requests\adapters.py", line 303, in cert_verify
+    raise OSError(
+    ...<2 lines>...
+    )
+OSError: Could not find a suitable TLS CA certificate bundle, invalid path: C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+
+2026-02-13 13:08:53,836 - agent.agent - INFO - Tentando gerar insights com a chave 1/2 (gsk_...niGJ)...
+2026-02-13 13:08:57,314 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-13 13:08:57,798 - xhtml2pdf.util - WARNING - getSize: Not a float '90%'
+2026-02-13 13:08:57,969 - agent.report_generator - INFO - Relatórios gerados: 4 arquivos.
+2026-02-13 13:08:57,969 - __main__ - INFO - Execução concluída com sucesso!
+2026-02-13 13:08:57,970 - __main__ - INFO - Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_130857.html
+2026-02-13 13:08:57,970 - __main__ - INFO - Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_130857.pdf
+2026-02-13 13:08:57,970 - __main__ - INFO - Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_130857.html
+2026-02-13 13:08:57,971 - __main__ - INFO - Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_130857.pdf
+2026-02-13 13:11:28,012 - __main__ - INFO - Iniciando Sistema de Monitoramento SRAG (PoC)
+2026-02-13 13:11:28,013 - __main__ - INFO - Banco de dados existente detectado.
+2026-02-13 13:11:28,014 - agent.tools.web_search_tool - WARNING - Removendo variável conflitante: CURL_CA_BUNDLE=C:\Program Files\PostgreSQL\18\ssl\certs\ca-bundle.crt
+2026-02-13 13:11:28,014 - agent.tools.web_search_tool - INFO - SSL forçado para: C:\Python314\Lib\site-packages\certifi\cacert.pem
+2026-02-13 13:11:28,014 - agent.agent - INFO - Agente iniciando análise...
+2026-02-13 13:11:28,014 - agent.tools.database_tool - INFO - DatabaseTool: Calculando métricas gerais...
+2026-02-13 13:11:29,449 - agent.metrics - INFO - ================================================================================
+2026-02-13 13:11:29,450 - agent.metrics - INFO - CÁLCULO DE MÉTRICAS OBRIGATÓRIAS (ENGENHARIA)
+2026-02-13 13:11:29,450 - agent.metrics - INFO - ================================================================================
+2026-02-13 13:11:29,572 - agent.metrics - INFO - Data de referência para métricas (P99.5): 2020-06-10
+2026-02-13 13:11:29,804 - agent.metrics - INFO - ✓ Crescimento (30d): +11.24%
+2026-02-13 13:11:29,804 - agent.metrics - INFO - ✓ Mortalidade: 32.50%
+2026-02-13 13:11:29,805 - agent.metrics - INFO - ✓ Ocupação UTI: 33.59%
+2026-02-13 13:11:29,805 - agent.metrics - INFO - ✓ Vacinação: 34.70%
+2026-02-13 13:11:29,805 - agent.metrics - INFO - ================================================================================
+2026-02-13 13:11:29,842 - agent.tools.database_tool - INFO - DatabaseTool: Gerando gráficos em C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets...
+2026-02-13 13:11:32,068 - agent.charts - INFO - 💾 Gráfico diário salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_daily.png
+2026-02-13 13:11:32,703 - agent.charts - INFO - 💾 Gráfico mensal salvo em: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\assets\cases_monthly.png
+2026-02-13 13:11:32,749 - agent.tools.web_search_tool - INFO - Scraping Gov.br para 'SRAG 2026'...
+2026-02-13 13:11:37,093 - agent.tools.web_search_tool - INFO - Scraping Saúde SP...
+2026-02-13 13:11:38,270 - agent.tools.web_search_tool - INFO - Buscando notícias via Tavily: aumento casos srag brasil influenza surto 2026
+2026-02-13 13:11:40,465 - agent.agent - INFO - Tentando gerar insights com a chave 1/2 (gsk_...niGJ)...
+2026-02-13 13:11:43,428 - httpx - INFO - HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-02-13 13:11:43,559 - xhtml2pdf.util - WARNING - getSize: Not a float '90%'
+2026-02-13 13:11:43,699 - agent.report_generator - INFO - Relatórios gerados: 4 arquivos.
+2026-02-13 13:11:43,700 - __main__ - INFO - Execução concluída com sucesso!
+2026-02-13 13:11:43,700 - __main__ - INFO - Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_131143.html
+2026-02-13 13:11:43,700 - __main__ - INFO - Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_dataset_20260213_131143.pdf
+2026-02-13 13:11:43,700 - __main__ - INFO - Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_131143.html
+2026-02-13 13:11:43,700 - __main__ - INFO - Relatório gerado: C:\Users\UNIVERSO\OneDrive\Apps\Desktop\Indicium Health\srag-poc\outputs\relatorios\relatorio_news_20260213_131143.pdf

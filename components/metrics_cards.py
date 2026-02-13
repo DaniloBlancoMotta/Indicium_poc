@@ -27,7 +27,7 @@ def render_metrics(metrics: dict):
     with col2:
         mortality = metrics.get('mortality', {})
         st.metric(
-            label="💀 Mortality Rate",
+            label=" Mortality Rate",
             value=f"{mortality.get('mortality_rate'):.1f}%",
             delta=None
         )
@@ -37,7 +37,7 @@ def render_metrics(metrics: dict):
     with col3:
         icu = metrics.get('icu', {})
         st.metric(
-            label="🏥 ICU Occupancy",
+            label=" ICU Occupancy",
             value=f"{icu.get('icu_rate'):.1f}%",
             delta=None
         )

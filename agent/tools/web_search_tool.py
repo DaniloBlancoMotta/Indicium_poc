@@ -1,54 +1,63 @@
 """
 Ferramenta de Busca Web Híbrida (R302)
-Combina DuckDuckGo Search para notícias gerais e scraping direto 
+Combina Tavily Search para notícias gerais e scraping direto 
 de portais oficiais (Gov.br, SP Gov) conforme a regra @[/engineer].
 """
 
 import logging
 import requests
+import os
 from bs4 import BeautifulSoup
 from typing import List, Dict, Optional
-from langchain_community.tools import DuckDuckGoSearchResults
-from langchain_community.utilities import DuckDuckGoSearchAPIWrapper
-from urllib.parse import urlencode
+from tavily import TavilyClient
 
 logger = logging.getLogger(__name__)
 
 class WebSearchTool:
     """
     Ferramenta de busca web que agrega:
-    1. Busca via DuckDuckGo (Notícias Gerais)
+    1. Busca via Tavily (Notícias Gerais) - Substitui DuckDuckGo
     2. Scraping direto do portal Gov.br (Ministério da Saúde)
     3. Scraping direto da Secretaria de Saúde SP
     """
     
     def __init__(self, max_results: int = 5):
-        # Correção para ambientes Windows com variáveis SSL mal configuradas
-        import os
-        for env_var in ['REQUESTS_CA_BUNDLE', 'SSL_CERT_FILE']:
-            val = os.environ.get(env_var)
-            if val and not os.path.exists(val):
-                logger.warning(f"Removendo variável SSL inválida: {env_var}={val}")
-                del os.environ[env_var]
+        # Correção Agressiva para SSL/TLS
+        # 1. Limpar variáveis conflitantes
+        keys_to_remove = []
+        for key in os.environ.keys():
+            if key.upper() in ['REQUESTS_CA_BUNDLE', 'SSL_CERT_FILE', 'CURL_CA_BUNDLE']:
+                keys_to_remove.append(key)
+        
+        for key in keys_to_remove:
+            val = os.environ[key]
+            logger.warning(f"Removendo variável conflitante: {key}={val}")
+            del os.environ[key]
+
+        # 2. Forçar uso do Certifi
+        try:
+            import certifi
+            cert_path = certifi.where()
+            os.environ['REQUESTS_CA_BUNDLE'] = cert_path
+            os.environ['SSL_CERT_FILE'] = cert_path
+            logger.info(f"SSL forçado para: {cert_path}")
+        except ImportError:
+            logger.warning("Certifi não encontrado. SSL dependerá do sistema.")
         
         self.max_results = max_results
+        self.tavily_client = None
         
-        # 1. Configuração DuckDuckGo
-        try:
-            self.wrapper = DuckDuckGoSearchAPIWrapper(
-                region="br-pt",
-                time="y",  # 'd' (day), 'w' (week), 'm' (month), 'y' (year)
-                max_results=max_results
-            )
-            self.search = DuckDuckGoSearchResults(
-                api_wrapper=self.wrapper,
-                backend="news"
-            )
-        except Exception as e:
-            logger.error(f"Erro ao inicializar DuckDuckGo: {e}")
-            self.search = None
+        # 1. Configuração Tavily
+        api_key = os.getenv("TAVILY_API_KEY")
+        if api_key:
+            try:
+                self.tavily_client = TavilyClient(api_key=api_key)
+            except Exception as e:
+                logger.error(f"Erro ao inicializar Tavily: {e}")
+        else:
+            logger.warning("TAVILY_API_KEY não configurada. Busca geral indisponível.")
             
-        # Headers para requests (evitar bloqueio básico)
+        # Headers para requests (evitar bloqueio básico nos scrapers)
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
@@ -56,13 +65,13 @@ class WebSearchTool:
     def _scrape_gov_br(self, query: str = "SRAG") -> List[Dict]:
         """
         Busca em https://www.gov.br/saude/pt-br/search
+        Mantido para redundância e foco em fonte oficial.
         """
         base_url = "https://www.gov.br/saude/pt-br/search"
         params = {
             'origem': 'form',
             'SearchableText': query
         }
-        
         
         logger.info(f"Scraping Gov.br para '{query}'...")
         results = []
@@ -91,13 +100,10 @@ class WebSearchTool:
                             if dd:
                                 desc = dd.get_text(strip=True)
                             
-                            # Tentar pegar data (span.documentByLine)
-                            date_str = ""
-                            
                             results.append({
                                 "title": title,
                                 "source": "Ministério da Saúde (Gov.br)",
-                                "published_at": date_str,
+                                "published_at": "", # Difícil extrair sem parsing complexo
                                 "summary": desc[:200] + "..." if len(desc) > 200 else desc,
                                 "url": link
                             })
@@ -166,24 +172,36 @@ class WebSearchTool:
         sp_news = self._scrape_sp_saude()
         all_news.extend(sp_news)
         
-        # 3. DuckDuckGo (Notícias Gerais/Imprensa)
-        if self.wrapper:
+        # 3. Tavily (Notícias Gerais/Imprensa)
+        if self.tavily_client:
             try:
                 # Queries combinadas
                 q = "aumento casos srag brasil influenza surto 2026"
-                # Usar .results() do wrapper para obter lista de dicts estruturada
-                ddg_results = self.wrapper.results(q, max_results=5)
+                logger.info(f"Buscando notícias via Tavily: {q}")
                 
-                for item in ddg_results:
+                response = self.tavily_client.search(
+                    query=q,
+                    search_depth="advanced",
+                    include_answer=False,
+                    include_raw_content=False,
+                    max_results=5,
+                    topic="news" # Otimizado para notícias
+                )
+                
+                results = response.get("results", [])
+                
+                for item in results:
                     all_news.append({
                         "title": item.get('title', 'Notícia Relacionada'),
-                        "source": "Imprensa (DuckDuckGo)",
-                        "published_at": "", # DDG wrapper nem sempre retorna data
-                        "summary": item.get('snippet', ''),
-                        "url": item.get('link', '#')
+                        "source": "Imprensa (Tavily)",
+                        "published_at": item.get('published_date', ''),
+                        "summary": item.get('content', '')[:300] + "...",
+                        "url": item.get('url', '#')
                     })
                     
             except Exception as e:
-                logger.error(f"Erro DuckDuckGo: {e}")
+                logger.error(f"Erro Tavily: {e}")
+                import traceback
+                logger.error(traceback.format_exc())
                 
         return all_news
