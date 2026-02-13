@@ -12,7 +12,7 @@ A solução desenvolvida atua como um **Agente de Inteligência Epidemiológica*
 
 ---
 
-## 🚀 Solução Desenvolvida
+##  Solução Desenvolvida
 
 A solução é composta por uma arquitetura modular que inclui:
 
@@ -21,9 +21,9 @@ A solução é composta por uma arquitetura modular que inclui:
 3.  **Agente de IA (LangChain)**: Um orquestrador inteligente que combina dados internos com buscas na web (notícias recentes) para gerar relatórios analíticos contextualizados.
 4.  **Interface Interativa (Streamlit)**: Um dashboard web responsivo para visualização de dados, tendências temporais e acesso aos relatórios gerados pela IA.
 
-### 📐 Arquitetura da Solução
+###  Arquitetura da Solução
 A arquitetura completa da solução pode ser visualizada no diagrama abaixo:
-- [📄 Diagrama de Arquitetura (PDF)](docs/arquitetura_solucao.pdf)
+- [ Diagrama de Arquitetura (PDF)](docs/arquitetura_solucao.pdf)
 
 ### Funcionalidades Principais
 -   **Monitoramento em Tempo Real**: Métricas atualizadas com base nos últimos dados disponíveis.
@@ -33,7 +33,7 @@ A arquitetura completa da solução pode ser visualizada no diagrama abaixo:
 
 ---
 
-## 📊 Análise Exploratória de Dados (EDA)
+## Análise Exploratória de Dados (EDA)
 
 A etapa de EDA foi fundamental para garantir a qualidade e confiabilidade das métricas geradas. As análises detalhadas estão disponíveis no diretório `analise/notebooks/`, com destaque para o notebook `01_eda_inicial.ipynb`.
 
@@ -50,7 +50,7 @@ A etapa de EDA foi fundamental para garantir a qualidade e confiabilidade das m�
 
 ---
 
-## 🛠️ Instalação e Configuração
+##  Instalação e Configuração
 
 ### Pré-requisitos
 -   Python 3.10 ou superior
@@ -94,7 +94,7 @@ Edite o arquivo `.env` inserindo suas chaves de API (ex: OpenAI, Anthropic, Tavi
 
 ---
 
-## 🐳 Conteinerização (Docker)
+## Conteinerização (Docker)
 
 A aplicação está totalmente conteinerizada, facilitando o deploy e garantindo consistência entre ambientes de desenvolvimento e produção.
 
@@ -113,7 +113,7 @@ Acesse o dashboard em: `http://localhost:8501`
 
 ---
 
-## ▶️ Como Executar Localmente
+## Como Executar Localmente
 
 Para iniciar o dashboard Streamlit fora do container:
 
@@ -128,7 +128,7 @@ python run_agent.py --output outputs/relatorios/
 
 ---
 
-## 📂 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 srag-analytics/
