@@ -1,5 +1,6 @@
-
 # Python-generated files
+.agent/
+
 __pycache__/
 *.py[oc]
 build/
@@ -22,7 +23,6 @@ outputs/relatorios/*
 
 # Jupyter Notebook
 .ipynb_checkpoints
-*.ipynb
 
 # Environment
 .env

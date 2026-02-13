@@ -1,6 +1,20 @@
 # SRAG Analytics Agent (PoC)
 
+
 Sistema inteligente para monitoramento e análise de Síndrome Respiratória Aguda Grave (SRAG) utilizando dados do DATASUS e Inteligência Artificial.
+
+---
+
+## 🎯 Descrição do Problema e Contexto
+
+A Síndrome Respiratória Aguda Grave (SRAG) representa um desafio contínuo para a saúde pública, exigindo monitoramento constante e respostas ágeis. Os dados epidemiológicos, embora disponíveis publicamente através do DATASUS (sistema SIVEP-Gripe), apresentam desafios significativos:
+
+1.  **Volume e Complexidade**: Milhares de registros diários com dezenas de variáveis clínicas e demográficas.
+2.  **Necessidade de Agilidade**: A identificação de surtos e tendências precisa ser feita em tempo hábil para orientar políticas públicas.
+3.  **Processamento Manual**: A análise tradicional depende de processos manuais de limpeza e estruturação de dados, propensos a erros e lentidão.
+4.  **Desconexão de Contexto**: Dados isolados sem o contexto de notícias e eventos atuais podem levar a interpretações incompletas.
+
+Este projeto propõe uma **solução automatizada** que ingere dados brutos, calcula métricas epidemiológicas críticas e utiliza um **Agente de IA** para gerar relatórios analíticos contextualizados, integrando dados quantitativos com notícias recentes, permitindo uma tomada de decisão mais informada e rápida.
 
 ---
 
@@ -46,9 +60,20 @@ srag-poc/
 ## ⚡ Como Executar
 
 1. **Clone e Instale as Dependências**:
+   Recomendamos o uso de um ambiente virtual para isolar as dependências do projeto.
    ```bash
    git clone <repo-url>
    cd srag-poc
+   
+   # Criar ambiente virtual
+   python -m venv .venv
+   
+   # Ativar ambiente virtual
+   # Windows:
+   .venv\Scripts\activate
+   # Linux/Mac:
+   source .venv/bin/activate
+
    pip install -r requirements.txt
    ```
 
@@ -74,6 +99,21 @@ srag-poc/
    ```bash
    streamlit run app.py
    ```
+
+## 🐳 Docker
+
+Para executar a aplicação em um container Docker, siga os passos abaixo:
+
+1. **Construir a Imagem**:
+   ```bash
+   docker build -t srag-agent .
+   ```
+
+2. **Executar o Container**:
+   ```bash
+   docker run -p 8501:8501 --env-file .env srag-agent
+   ```
+   Isso iniciará a aplicação e disponibilizará o dashboard na porta 8501.
 
 ## 🧠 Decisões Técnicas
 
