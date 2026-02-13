@@ -100,7 +100,7 @@ srag-poc/
    streamlit run app.py
    ```
 
-## 🐳 Docker
+##  Docker
 
 Para executar a aplicação em um container Docker, siga os passos abaixo:
 
@@ -115,19 +115,19 @@ Para executar a aplicação em um container Docker, siga os passos abaixo:
    ```
    Isso iniciará a aplicação e disponibilizará o dashboard na porta 8501.
 
-## 🧠 Decisões Técnicas
+##  Decisões Técnicas
 
 - **SQLite**: Escolhido para armazenamento local eficiente e suporte a SQL completo sem overhead de servidor.
 - **LangChain + Groq**: Combinação para alta performance de inferência (Llama 3 70B) com abstração robusta de ferramentas.
 - **Pandas**: Motor de processamento em memória para limpeza e transformação inicial dos dados brutos.
 - **xhtml2pdf**: Geração de relatórios PDF a partir de templates HTML/CSS.
-- **DuckDuckGo & Scraping**: Coleta de notícias em tempo real sem custos de API proprietária.
+- **Tavily API e DuckDuckGo & Scraping**: Coleta de notícias em tempo real sem custos de API proprietária.
 
 ## ⚠️ Limitações Conhecidas (PoC)
 
 - O desempenho da geração de PDF pode variar com base na complexidade do HTML.
-- O filtro temporal do dataset considera a data mais recente no histórico (2020-2021) para simular um cenário "em tempo real".
+- O filtro temporal do dataset considera a data mais recente no histórico (2020-2021) para simular cada cenário "em tempo real".
 
-## 📄 Licença
+##  Licença
 
 Este projeto é uma Prova de Conceito (PoC) desenvolvida para fins de demonstração técnica.
