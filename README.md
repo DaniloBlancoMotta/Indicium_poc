@@ -5,7 +5,7 @@ Sistema inteligente para monitoramento e análise de Síndrome Respiratória Agu
 
 ---
 
-## 🎯 Descrição do Problema e Contexto
+##  Descrição do Problema e Contexto
 
 A Síndrome Respiratória Aguda Grave (SRAG) representa um desafio contínuo para a saúde pública, exigindo monitoramento constante e respostas ágeis. Os dados epidemiológicos, embora disponíveis publicamente através do DATASUS (sistema SIVEP-Gripe), apresentam desafios significativos:
 
@@ -18,7 +18,7 @@ Este projeto propõe uma **solução automatizada** que ingere dados brutos, cal
 
 ---
 
-## 🚀 Funcionalidades
+##  Funcionalidades
 
 - **Processamento de Dados**: Pipeline automatizado que transforma CSV bruto do DATASUS em um banco de dados SQLite otimizado.
 - **Métricas Chave**: Cálculo preciso de:
@@ -51,13 +51,13 @@ srag-poc/
 └── requirements.txt     # Dependências
 ```
 
-## 📋 Pré-requisitos
+## Pré-requisitos
 
 - Python 3.10 ou superior
 - Uma chave de API da [Groq](https://console.groq.com/) (Gratuita para teste)
 - Dados do DATASUS (Arquivo INFLUD*.csv na pasta `data/raw`)
 
-## ⚡ Como Executar
+##  Como Executar
 
 1. **Clone e Instale as Dependências**:
    Recomendamos o uso de um ambiente virtual para isolar as dependências do projeto.
