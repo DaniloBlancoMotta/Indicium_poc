@@ -21,6 +21,10 @@ A solução é composta por uma arquitetura modular que inclui:
 3.  **Agente de IA (LangChain)**: Um orquestrador inteligente que combina dados internos com buscas na web (notícias recentes) para gerar relatórios analíticos contextualizados.
 4.  **Interface Interativa (Streamlit)**: Um dashboard web responsivo para visualização de dados, tendências temporais e acesso aos relatórios gerados pela IA.
 
+### 📐 Arquitetura da Solução
+A arquitetura completa da solução pode ser visualizada no diagrama abaixo:
+- [📄 Diagrama de Arquitetura (PDF)](docs/arquitetura_solucao.pdf)
+
 ### Funcionalidades Principais
 -   **Monitoramento em Tempo Real**: Métricas atualizadas com base nos últimos dados disponíveis.
 -   **Análise Preditiva e Contextual**: Insights gerados por IA correlacionando dados internos com notícias externas.
